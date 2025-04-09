@@ -77,19 +77,20 @@ function handleClick(e) {
 }
 
 function CheckPairs(li1,li2) {
+    console.log(li1,li2);
     if(li1.innerHTML === li2.innerHTML){
         console.log("egy par");
     }
     else{
         console.log("nem par");
         li1.classList.remove("selected");
-        li1.innerHTML = `${lista.findIndex()}`;
         li2.classList.remove("selected");
-        li2.innerHTML = `${lista[i]}`;
+        li2.innerHTML = `${li2.innerHTML.split(`/`)[1].split(`.`)[0]}`;
+        li1.innerHTML = `${li1.innerHTML.split(`/`)[1].split(`.`)[0]}`;
     }
 }
 ul.addEventListener("click", handleClick);
 
 
 
-start.addEventListener("click",ulfeltoltes)
+start.addEventListener("click",ulfeltoltes);
