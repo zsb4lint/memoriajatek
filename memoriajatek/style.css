@@ -2,6 +2,8 @@ li{
     height: 300px;
     width: 200px;
     background-color: black;
+    animation-name: proba;
+    animation-duration: 2s;
 }
 ul{
     display: flex;
@@ -13,9 +15,14 @@ li{
 }
 img{
     display: none;
+   
 }
 .selected img{
     display: inline-block !important;
     height: 300px;
     width: 200px;
+}
+@keyframes proba {
+    from {background-color: black;}
+    to { background-color: none;}
 }
