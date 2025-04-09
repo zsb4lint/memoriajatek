@@ -1,0 +1,21 @@
+li{
+    height: 300px;
+    width: 200px;
+    background-color: black;
+}
+ul{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+li{
+    list-style: none;
+}
+img{
+    display: none;
+}
+.selected img{
+    display: inline-block !important;
+    height: 300px;
+    width: 200px;
+}
