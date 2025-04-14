@@ -6,18 +6,31 @@ const easy = document.querySelector("#easy");
 const medium = document.querySelector("#medium");
 const hard = document.querySelector("#hard");
 let szam;
-let lista = [];
+let kevertlista = [];
 const ul = document.querySelector("ul");
-function ulfeltoltes() {
+async function ulfeltoltes() {
     radiobuttonchecked()
-    for (let i = 0; i < lista.length; i++) {
+    for (let i = 0; i < kevertlista.length; i++) {
         const li = document.createElement("li");
-        //li.innerHTML = `<img id="${lista[i]}" src="jojo/${lista[i]}.jpg">`;
-        li.innerHTML = `${lista[i]}`;
+        //li.innerHTML = `<img src="jojo/${lista[i]}.jpg">`;
+        await onload(li,kevertlista[i]);
+        li.innerHTML = `<img src="jojo/${kevertlista[i]}.jpg"> `;
+        li.style.color="rgba(0,0,0,0%)"
+        li.setAttribute(`id`,`${kevertlista[i]}`);
         ul.appendChild(li);
     }
     start.removeEventListener("click",ulfeltoltes);
 }
+function onload(li,i){
+    li.classList.add("selected");
+    li.innerHTML = `<img src="jojo/${i}.jpg"> `;
+    setTimeout(() => {
+        li.classList.remove("selected");
+        li.style.backgroundColor= "black";
+        li.innerHTML = i;
+    }, 4000)
+}
+
 function radiobuttonchecked() {
     if(medium.checked === true){
         szam = 6
@@ -37,60 +50,107 @@ function shuffleList(szam){
     let ismetles = false
     
     for (let i = 0; i < szam*2*2; i++) {
-        lista[i] = kepek[y]
+        kevertlista[i] = kepek[y]
         y++;
         if(y === szam*2 && ismetles !==true){
             y=0;
             ismetles=true;
         }
     }
-    shuffle(lista);
-    console.log(lista.length);
+    shuffle(kevertlista);
+    //console.log(lista.length);
     //console.log(lista);
 }
-function shuffle(lista) {
-    let Index = lista.length;
-
+function shuffle(kevertlista) {
+    let Index = kevertlista.length;
+    
     while (Index != 0) {
-      let randomIndex = Math.floor(Math.random() * Index);
-      Index--;
-      [lista[Index], lista[randomIndex]] = [lista[randomIndex], lista[Index]];
+        let randomIndex = Math.floor(Math.random() * Index);
+        Index--;
+        [kevertlista[Index], kevertlista[randomIndex]] = [kevertlista[randomIndex], kevertlista[Index]];
     }
 }
 
 let first;
+let katszam = 0;
 function handleClick(e) {
     const li = e.target
+    if(!e.target.matches("ul li")) return;
+    katszam++;
     if(!first){
         first = li;
         first.innerHTML = `<img src="jojo/${e.target.innerHTML}.jpg">`;
         first.classList.add("selected");
-        console.log(e.target);
+        //console.log(e.target);
     } 
-    else{
+    else if(katszam === 2){
         e.target.classList.add("selected");
-        console.log(e.target);
-        e.target.innerHTML = `<img src="jojo/${e.target.innerHTML}.jpg">`;
+        //console.log(li);
+        li.innerHTML = `<img src="jojo/${e.target.innerHTML}.jpg">`;
         CheckPairs(first,li)
         first=null;
+        katszam = 0;
     }
 }
-
 function CheckPairs(li1,li2) {
-    console.log(li1,li2);
-    if(li1.innerHTML === li2.innerHTML){
+    //console.log(li1,li2);
+    if(li1.innerHTML === li2.innerHTML &&li1 !== li2){
         console.log("egy par");
+        li1.children[0].style.opacity = 0;
+        li2.children[0].style.opacity = 0;
+        li1.style.opacity = 0;
+        li2.style.opacity = 0;
     }
-    else{
+    else {
         console.log("nem par");
+        pareltuntet(li1,li2)
+    }
+}
+function pareltuntet(li1,li2){
+    ul.removeEventListener("click", handleClick);
+    setTimeout(() => {
         li1.classList.remove("selected");
         li2.classList.remove("selected");
         li2.innerHTML = `${li2.innerHTML.split(`/`)[1].split(`.`)[0]}`;
         li1.innerHTML = `${li1.innerHTML.split(`/`)[1].split(`.`)[0]}`;
-    }
+        ul.addEventListener("click", handleClick);
+    }, 1000)
 }
 ul.addEventListener("click", handleClick);
+ul.addEventListener("mousedown", handleBug);
 
+function handleBug(e) {
+    e.preventDefault();
+}
 
-
+const felfedes = document.querySelector("#felfed")
+felfedes.addEventListener("click",felfedeses);
+async function felfedeses() {
+    for (let i = 0; i < kevertlista.length; i++) {
+        //console.log(ul.children[0]);
+        ul.children[i].classList.add("selected");
+        ul.children[i].innerHTML = `<img src="jojo/${kevertlista[i]}.jpg">`;
+        await setTimeout(() => {
+            ul.children[i].classList.remove("selected");
+            ul.children[i].style.backgroundColor= "black";
+            ul.children[i].innerHTML = i;
+        }, 4000)
+    }
+    felfedes.removeEventListener("click",felfedeses)
+}
+const parfelfedes = document.querySelector("#parfelfed")
+parfelfedes.addEventListener("click",parfelfedeses);
+function parfelfedeses() {
+    let  fisz = randint(0,kevertlista.length)
+    let olyanvaltozo = kevertlista[fisz];
+    for (let i = 0; i < kevertlista.length; i++) {
+        if(kevertlista[i]===olyanvaltozo){
+            console.log(olyanvaltozo.parentElement.nodeName);
+        }
+    }
+}
+function randint(a, b) {
+    return Math.floor(Math.random()*(b-a+1)) + a;
+}
+//felfedes.removeEventListener("click",onload);
 start.addEventListener("click",ulfeltoltes);
