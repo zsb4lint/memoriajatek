@@ -1,0 +1,1 @@
+const lista =["Abdul", "Bucci", "Ceasar", "CrazyDiamond","D4C","Diavolo","Dio2","Echoes","Giorno","Gold experinece","GreenHier..","Gyro","HeaveansDoor","Iggy","Jojolion","Jolyne", "Jonathan", "Joseph", "Josuke", "Josuke","Kakyion","KingCrismon","Kira","MIsat","Narancia","Ora","PillarMen","Requiem","Rohan","SilverChariot","StarPlatinum",TheWorld"]
