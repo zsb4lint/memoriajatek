@@ -1,6 +1,8 @@
 img{
     height: 300px;
     width: 200px;
+    border-radius: 10px;
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.8);
 }
 
 #Fodiv{
@@ -21,4 +23,74 @@ img{
 }
 .lathato{
     filter: brightness(100%); 
+}
+/****/
+
+#Felfed:hover {
+    animation: remego-gomb infinite 0.25s;
+}    
+
+#parfelfed:hover {
+    background-color: red;
+    animation: szines infinite 0.65s;
+}   
+
+#start:hover{
+    background-color: rgb(180, 9, 9); 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+    /* kikéne venni a start id-t a gombból és akkor nem adja be ÉS lecserélni a "startutan"-ra*/
+}
+
+
+#startutan{
+    transform: none ;
+    background-color: rgb(231, 216, 216); 
+}
+
+body{
+    min-height: 100vh;
+    background-image: linear-gradient(rgb(236, 97, 97),rgb(241, 241, 104)); 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+button{
+    margin-bottom:  5px;
+    background-color: red;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+@keyframes remego-gomb {
+   0%, 100% {
+       transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(-5deg);
+    }
+}
+
+@keyframes szines {
+    from {background-color: red;}
+    to {background-color: rgb(106, 106, 206);}
+}
+
+.lathato{
+    animation: swap 0.5s forwards;
+}
+
+@keyframes swap {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
