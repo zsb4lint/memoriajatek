@@ -9,10 +9,11 @@ const fodiv = document.querySelector("#Fodiv")
 const timer = document.querySelector("#timer")
 let time = Date.now();
 let timerid = 0;
-
+let dif = "";
 function Nehezseg() {
     //duplalista=[];
     if(easy.checked ===true){
+        dif = "Easy";
         for (let i = 0; i < 4*2; i++) {
             duplalista.push(kepek[i]);
             duplalista.push(kepek[i]);
@@ -20,6 +21,7 @@ function Nehezseg() {
         //return 4;
     }
     else if (medium.checked===true){
+        dif = "Medium";
         for (let i = 0; i < 9*2; i++) {
             duplalista.push(kepek[i]);
             duplalista.push(kepek[i]);
@@ -27,6 +29,7 @@ function Nehezseg() {
         //return 6;
     }
     else if (hard.checked===true){
+        dif = "Hard";
         for (let i = 0; i < 16*2; i++) {
             duplalista.push(kepek[i]);
             duplalista.push(kepek[i]);
@@ -47,6 +50,12 @@ function Shuffli(){
 }
 async function KartyaGeneralas() {
     Shuffli();
+    const classosok = document.querySelectorAll(".eltunt")
+    console.log(classosok);
+    for (let i = 0; i < classosok.length; i++) {
+        classosok[i].classList.remove("eltunt")
+        console.log(classosok[i]);
+    }
     for (let i = 0; i < duplalista.length; i++) {
         const kisdiv = document.createElement("div");
         kisdiv.innerHTML=`<img src="jojo/${duplalista[i]}.jpg" id="${duplalista[i]}">`;
@@ -125,6 +134,10 @@ function HandleClick(e) {
                 fodiv.addEventListener("click",HandleClick)
             },1500)
             parpont++;
+            if(parpont == duplalista.length/2)
+            {
+                LocalStorage();
+            }
             console.log("Pár");
         }
         else{
@@ -175,6 +188,40 @@ function Parfelfed() {
 }
 const felfedbutton = document.querySelector("#Felfed")
 felfedbutton.addEventListener("click",Mutatas);
+
+let eredmenyek;
+function EredmenyekBetolt()
+{
+    if(localStorage.getItem("eredmenyek") === null)
+    {
+        return [];
+    }
+    return JSON.parse(localStorage.getItem("eredmenyek"));
+}
+
+const kor = document.getElementById("kor");
+const email = document.getElementById("email");
+
+
+function LocalStorage()
+{
+    clearInterval(timerid);
+    const honap = ((new Date().getMonth())+1);
+    let object = 
+    {
+        email: email.value,
+        age: kor.value,
+        chosen_level: dif,
+        playtime: (Date.now() - time)/1000,
+        mistakes: hibapont,
+        created_at: `${new Date().getFullYear()} - ${`${honap}`.padStart(2, '0')} - ${new Date().getDate()}`
+    }
+    eredmenyek = EredmenyekBetolt();
+    console.log(object);
+    const stringes = JSON.stringify(object);
+    eredmenyek.push(stringes);
+    localStorage.setItem("eredmenyek",JSON.stringify(eredmenyek));
+}
 
 fodiv.addEventListener("mousedown", handleBug);
 fodiv.addEventListener("click",HandleClick);
