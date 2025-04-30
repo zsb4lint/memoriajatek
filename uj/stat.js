@@ -49,14 +49,14 @@ function show(a) {
     }
 }
 function getMemorygame() {
+    const b = document.querySelector("select").value;
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost/memory/");
+    xhr.open("GET", `http://localhost/memory/index.php?level=${b}`,true);
     xhr.onload = () => {
         const data = JSON.parse(xhr.response);
         show(data);
     }
     xhr.send();
-
 }
 szures.addEventListener("click",emailSzures)
 window.addEventListener("onload",localStorageLekeres)
